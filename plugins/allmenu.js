@@ -1,4 +1,4 @@
-const { cmd, commands } = require("../arslan");
+const { cmd, commands } = require("../queen");
 const moment = require("moment-timezone");
 const { fakevCard } = require('../lib/fakevCard');
 
@@ -37,14 +37,14 @@ cmd({
 ┃ ✦│▸ Total Commands : *${totalCommands}*
 ┃ ✦│▸ Time           : ${time}
 ┃ ✦│▸ Date           : ${date}
-┃ ✦│▸ Platform       : arslanmd.xo.je
+┃ ✦│▸ Platform       : devtrix.zone.id
 ┃ ✦╰─────────────┈⊷
 ╰━━━━━━━━━━━━┈⊷
 ${menuText}
 `.trim();
 
         await conn.sendMessage(m.chat, {
-            image: { url: "https://files.catbox.moe/prkkzj.png" },
+            image: { url: "https://imgur.com/a/OVo6eqg" },
             caption,
             contextInfo: {
                 forwardingScore: 999,
