@@ -1,4 +1,4 @@
-const { cmd } = require("../arslan");
+const { cmd } = require("../queen");
 
 cmd({
     pattern: "groupstatus",
@@ -116,7 +116,7 @@ ${caption || "No Caption"}`
         console.log("GROUPSTATUS ERROR:", err);
 
         return reply(
-`❌ ARSLAN-X-MD STATUS ERROR
+`❌ Queen Mia-X-MD STATUS ERROR
 
 ${err.message}`
         );
