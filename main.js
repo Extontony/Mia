@@ -12,7 +12,7 @@ const {
 } = require('@whiskeysockets/baileys');
 const { arslanmd } = require('./lib/system');
 const config = require('./config');
-const events = require('./arslan');
+const events = require('./queen');
 const { sms } = require('./lib/msg');
 const {
     connectdb,
@@ -102,7 +102,7 @@ function getConnectionStatus(number) {
 
 function arslanLog(message, type = 'info') {
     const icons = { info: '📝', success: '✅', error: '❌', warning: '⚠️', debug: '🐛' };
-    console.log(`${icons[type] || '📝'} [ARSLAN-MD-MINI] ${new Date().toISOString()}: ${message}`);
+    console.log(`${icons[type] || '📝'} [QUEEN MIA-MD-MINI] ${new Date().toISOString()}: ${message}`);
 }
 
 // Load Plugins
@@ -112,7 +112,7 @@ const pluginFiles = fs.readdirSync(pluginsDir).filter(f => f.endsWith('.js'));
 arslanLog(`Loading ${pluginFiles.length} plugins...`, 'info');
 for (const file of pluginFiles) {
     try { require(path.join(pluginsDir, file)); }
-    catch (e) { arslanLog(`Failed to load plugin ${file}: ${e.message}`, 'error'); }
+    catch (e) { queenLog(`Failed to load plugin ${file}: ${e.message}`, 'error'); }
 }
 
 
@@ -196,7 +196,7 @@ async function arslanPair(number, res = null) {
             return;
         }
 
-        connectionLockKey = `arslan_lock_${sanitizedNumber}`;
+        connectionLockKey = `queen_lock_${sanitizedNumber}`;
         if (global[connectionLockKey]) {
             if (res && !res.headersSent) return res.json({ status: 'connection_in_progress' });
             return;
@@ -242,7 +242,7 @@ async function arslanPair(number, res = null) {
             browser: ['Mac OS', 'Safari', '10.15.7'],
             getMessage: async (key) => {
                 const msg = await arslanStore.loadMessage(key.remoteJid, key.id);
-                return msg && msg.message ? msg.message : { conversation: 'ARSLAN-MD' };
+                return msg && msg.message ? msg.message : { conversation: 'QUEEN-MD' };
             }
         });
 
@@ -279,7 +279,7 @@ async function arslanPair(number, res = null) {
 
         // Pairing Code
         if (!conn.authState.creds.registered) {
-            arslanLog(`🔐 Starting NEW pairing process for ${sanitizedNumber}`, 'info');
+            queenLog(`🔐 Starting NEW pairing process for ${sanitizedNumber}`, 'info');
             try {
                 await delay(1500);
                 const code = await conn.requestPairingCode(sanitizedNumber);
@@ -288,14 +288,14 @@ async function arslanPair(number, res = null) {
                     res.send({ code, status: 'new_pairing' });
                 }
             } catch (error) {
-                arslanLog(`Failed to request pairing code: ${error.message}`, 'error');
+                queenLog(`Failed to request pairing code: ${error.message}`, 'error');
                 if (res && !res.headersSent) {
                     res.status(500).send({ error: 'Failed to get pairing code', status: 'error', message: error.message });
                 }
                 throw error;
             }
         } else {
-            arslanLog(`✅ Using existing session for ${sanitizedNumber}`, 'success');
+            queenLog(`✅ Using existing session for ${sanitizedNumber}`, 'success');
             if (res && !res.headersSent) {
                 res.json({ status: 'reconnecting', message: 'Reconnecting with existing session' });
             }
@@ -310,7 +310,7 @@ async function arslanPair(number, res = null) {
             const isNewSession = !existingSessionCheck;
             await saveSessionToMongoDB(sanitizedNumber, creds);
             if (isNewSession) {
-                arslanLog(`🎉 NEW user ${sanitizedNumber} successfully registered!`, 'success');
+                queenLog(`🎉 NEW user ${sanitizedNumber} successfully registered!`, 'success');
             }
         });
 
@@ -330,13 +330,13 @@ async function arslanPair(number, res = null) {
                 if (!existingSession) {
                     await conn.sendMessage(userJid, {
                         image: { url: config.IMAGE_PATH },
-                        caption: `\n╭────────────────────◇\n│✦ *ARSLAN-MD — CONNECTED* 🔥\n│✦ Type *${prefix}menu* to see all commands 💫\n│✦ Prefix 『 ${prefix} 』  Mode 〔${mode}〕\n╰────────────────────○\n*© Powered by ARSLAN-MD*`
+                        caption: `\n╭────────────────────◇\n│✦ *QUEEN MIA-MD — CONNECTED* 🔥\n│✦ Type *${prefix}menu* to see all commands 💫\n│✦ Prefix 『 ${prefix} 』  Mode 〔${mode}〕\n╰────────────────────○\n*© Powered by QUEEN MIA-MD*`
                     });
                 }
             }
             if (connection === 'close') {
                 const reason = lastDisconnect && lastDisconnect.error && lastDisconnect.error.output && lastDisconnect.error.output.statusCode;
-                if (reason === DisconnectReason.loggedOut) arslanLog(`Session logged out.`, 'error');
+                if (reason === DisconnectReason.loggedOut) queenLog(`Session logged out.`, 'error');
             }
         });
 
@@ -428,9 +428,9 @@ async function arslanPair(number, res = null) {
                 const myquoted = {
                     key: { remoteJid: 'status@broadcast', participant: '13135550002@s.whatsapp.net', fromMe: false, id: createSerial(16).toUpperCase() },
                     message: { contactMessage: {
-                        displayName: '© ARSLAN-MD',
-                        vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:ARSLAN-MD BOY\nORG:ARSLAN-MD BOY;\nTEL;type=CELL;type=VOICE;waid=13135550002:13135550002\nEND:VCARD`,
-                        contextInfo: { stanzaId: createSerial(16).toUpperCase(), participant: '0@s.whatsapp.net', quotedMessage: { conversation: '© ARSLAN-MD' } }
+                        displayName: '© QUEEN MIA-MD',
+                        vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:QUEEN MIA-MD BOY\nORG:QUEEN MIA-MD BOY;\nTEL;type=CELL;type=VOICE;waid=13135550002:13135550002\nEND:VCARD`,
+                        contextInfo: { stanzaId: createSerial(16).toUpperCase(), participant: '0@s.whatsapp.net', quotedMessage: { conversation: '© QUEEN MIA-MD' } }
                     }},
                     messageTimestamp: Math.floor(Date.now() / 1000),
                     status: 1, verifiedBizName: 'Meta'
@@ -447,7 +447,7 @@ async function arslanPair(number, res = null) {
                         if (cmd.react) conn.sendMessage(from, { react: { text: cmd.react, key: mek.key } });
                         try {
                             cmd.function(conn, mek, m, { from, quoted: mek, body, isCmd, command, args, q, text, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, isCreator, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply, config, myquoted });
-                        } catch (e) { arslanLog(`PLUGIN ERROR [${command}]: ${e.message}`, 'error'); }
+                        } catch (e) { queenLog(`PLUGIN ERROR [${command}]: ${e.message}`, 'error'); }
                     }
                 }
 
@@ -462,11 +462,11 @@ async function arslanPair(number, res = null) {
                     else if (evCmd.on === 'sticker' && mek.type === 'stickerMessage') evCmd.function(conn, mek, m, ctx);
                 });
 
-            } catch (e) { arslanLog(`Message handler error: ${e.message}`, 'error'); }
+            } catch (e) { queenLog(`Message handler error: ${e.message}`, 'error'); }
         });
 
     } catch (err) {
-        arslanLog(`ARSLAN-MD-MINI Pair error: ${err.message}`, 'error');
+        queenLog(`QUEEN MIA-MD-MINI Pair error: ${err.message}`, 'error');
         if (res && !res.headersSent) return res.json({ error: 'Internal Server Error', details: err.message });
     } finally {
         if (connectionLockKey) global[connectionLockKey] = false;
@@ -475,7 +475,7 @@ async function arslanPair(number, res = null) {
 
 
 router.get('/', (req, res) => res.sendFile(path.join(__dirname, 'pair.html')));
-router.get('/code', async (req, res) => { if (!req.query.number) return res.json({ error: 'Number required' }); await arslanPair(req.query.number, res); });
+router.get('/code', async (req, res) => { if (!req.query.number) return res.json({ error: 'Number required' }); await queenPair(req.query.number, res); });
 router.get('/status', async (req, res) => {
     const { number } = req.query;
     if (!number) {
@@ -499,7 +499,7 @@ router.get('/disconnect', async (req, res) => {
     } catch (e) { res.status(500).json({ error: 'Failed to disconnect' }); }
 });
 router.get('/active', (req, res) => res.json({ count: activeSockets.size, numbers: Array.from(activeSockets.keys()) }));
-router.get('/ping', (req, res) => res.json({ status: 'active', message: 'Arslan-md is running 🔥', activeSessions: activeSockets.size }));
+router.get('/ping', (req, res) => res.json({ status: 'active', message: 'Queen Mia-md is running 🔥', activeSessions: activeSockets.size }));
 router.get('/connect-all', async (req, res) => {
     try {
         const numbers = await getAllNumbersFromMongoDB();
@@ -508,7 +508,7 @@ router.get('/connect-all', async (req, res) => {
         for (const number of numbers) {
             if (activeSockets.has(number)) { results.push({ number, status: 'already_connected' }); continue; }
             const mockRes = { headersSent: false, json: () => {}, status: () => mockRes };
-            await arslanPair(number, mockRes);
+            await queenPair(number, mockRes);
             results.push({ number, status: 'connection_initiated' });
             await delay(1000);
         }
@@ -525,7 +525,7 @@ router.get('/update-config', async (req, res) => {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     await saveOTPToMongoDB(n, otp, newConfig);
     try {
-        await socket.sendMessage(jidNormalizedUser(socket.user.id), { text: `*🔐 ARSLAN-MD — CONFIG UPDATE*\n\nOTP: *${otp}*\nValid 5 minutes` });
+        await socket.sendMessage(jidNormalizedUser(socket.user.id), { text: `*🔐 QUEEN MIA-MD — CONFIG UPDATE*\n\nOTP: *${otp}*\nValid 5 minutes` });
         res.json({ status: 'otp_sent' });
     } catch (e) { res.status(500).json({ error: 'Failed to send OTP' }); }
 });
@@ -555,18 +555,18 @@ router.get('/stats', async (req, res) => {
 
 async function autoReconnectFromMongoDB() {
     try {
-        arslanLog('Attempting auto-reconnect from MongoDB...', 'info');
+        queenLog('Attempting auto-reconnect from MongoDB...', 'info');
         const numbers = await getAllNumbersFromMongoDB();
-        if (!numbers.length) { arslanLog('No numbers in MongoDB', 'info'); return; }
+        if (!numbers.length) { queenLog('No numbers in MongoDB', 'info'); return; }
         for (const number of numbers) {
             if (!activeSockets.has(number)) {
                 const mockRes = { headersSent: false, json: () => {}, status: () => mockRes };
-                await arslanPair(number, mockRes);
+                await queenPair(number, mockRes);
                 await delay(2000);
             }
         }
         arslanLog('Auto-reconnect completed', 'success');
-    } catch (e) { arslanLog(`autoReconnectFromMongoDB error: ${e.message}`, 'error'); }
+    } catch (e) { queenLog(`autoReconnectFromMongoDB error: ${e.message}`, 'error'); }
 }
 
 setTimeout(() => { autoReconnectFromMongoDB(); }, 3000);
@@ -583,7 +583,7 @@ process.on('exit', () => {
 });
 
 process.on('uncaughtException', (err) => {
-    arslanLog(`Uncaught exception: ${err.message}`, 'error');
+    queenLog(`Uncaught exception: ${err.message}`, 'error');
 });
 
 module.exports = router;
