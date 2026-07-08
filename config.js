@@ -1,11 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════════════
-//  █████╗ ██████╗ ███████╗██╗      █████╗  ███╗   ██╗    ███╗   ███╗██████╗ 
-// ██╔══██╗██╔══██╗██╔════╝██║     ██╔══██╗████╗  ██║    ████╗ ████║██╔══██╗
-// ███████║██████╔╝███████╗██║     ███████║██╔██╗ ██║    ██╔████╔██║██║  ██║
-// ██╔══██║██╔══██╗╚════██║██║     ██╔══██║██║╚██╗██║    ██║╚██╔╝██║██║  ██║
-// ██║  ██║██║  ██║███████║███████╗██║  ██║██║  ████║     ██║ ╚═╝ ██║██████╔╝
-// ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═══╝    ╚═╝     ╚═╝╚═════╝ 
-// ═══════════════════════════════════════════════════════════════════════════
+//  █══════════════════
 //                    QUEEN MIA  MD - BOT CONFIGURATION
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -56,14 +50,14 @@ module.exports = {
     /** 
      * @description Owner's WhatsApp number with country code
      * @type {string}
-     * @default "+923237045919"
+     * @default "+263777237953"
      */
     OWNER_NUMBER: process.env.OWNER_NUMBER || '+263777237953',
     
     /** 
      * @description Display name of the bot
      * @type {string}
-     * @default "Arslan MD Mini"
+     * @default "Queen Mia MD Mini"
      */
     BOT_NAME: "QUEEN MIA  MD Mini",
     
@@ -199,7 +193,7 @@ module.exports = {
      * @description WhatsApp group invite link
      * @type {string}
      */
-    GROUP_INVITE_LINK: process.env.GROUP_INVITE_LINK || 'https://chat.whatsapp.com/Jpf5TU6nrwlFcQnW86bR7f?s=cl&p=a&mlu=4&amv=3',
+    GROUP_INVITE_LINK: process.env.GROUP_INVITE_LINK || 'https://chat.whatsapp.com/Jpf5TU6nrwlFcQnW86bR7f?s=cl&p=a&mlu=43',
 
     // ═══════════════════════════════════════════════════════════════════════
     //  🛡️ SECURITY & ANTI-CALL
@@ -233,7 +227,7 @@ module.exports = {
      * @description WhatsApp channel link for updates
      * @type {string}
      */
-    CHANNEL_LINK: 'https://whatsapp.com/channel/0029VarfjW04tRrmwfb8x306',
+    CHANNEL_LINK: 'https://whatsapp.com/channel/0029VarfjW04tRrm06',
 
     // ═══════════════════════════════════════════════════════════════════════
     //  📡 EXTERNAL API INTEGRATIONS
@@ -249,7 +243,7 @@ module.exports = {
     /** 
      * @description Telegram chat ID for sending notifications
      * @type {string}
-     * @default "+923237045919"
+     * @default "+263777237953"
      */
     TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID || '+263777237953'
 
@@ -286,6 +280,6 @@ module.exports = {
  * @module config
  * @description QUEEN MIA  MD Bot Configuration Module
  * @version 2.0.0
- * @author Arslan MD
+ * @author Queen Mia MD
  * @license MIT
  */
