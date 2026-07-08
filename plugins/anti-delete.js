@@ -1,4 +1,4 @@
-const { cmd } = require('../arslan');
+const { cmd } = require('../queen');
 const { setAntideleteStatus, getAntideleteStatus } = require('../data/Antidelete');
 
 cmd({
