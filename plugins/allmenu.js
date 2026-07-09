@@ -44,7 +44,7 @@ ${menuText}
 `.trim();
 
         await conn.sendMessage(m.chat, {
-            image: { url: "https://imgur.com/a/OVo6eqg" },
+            image: { url: "https://ibb.co/jvxdN2Fs" },
             caption,
             contextInfo: {
                 forwardingScore: 999,
