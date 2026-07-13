@@ -72,14 +72,14 @@ module.exports = {
     /** 
      * @description Bot work mode
      * @type {('public'|'private'|'group'|'inbox')}
-     * @default "public"
+     * @default "private"
      * @example
      * - public  : Responds to all messages
      * - private : Only responds in DMs
      * - group   : Only responds in groups
      * - inbox   : Only responds in DMs
      */
-    WORK_TYPE: process.env.WORK_TYPE || "public",
+    WORK_TYPE: process.env.WORK_TYPE || "private",
 
     // ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
     //  🤖 AI CONFIGURATION
@@ -93,11 +93,11 @@ module.exports = {
     AI_MODE: process.env.AI_MODE || 'true',
     
     /** 
-     * @description AI API URL
+     * @description AI API URL - Gemini AI Pro
      * @type {string}
-     * @default "https://api.princetechn.com/api/ai/chat"
+     * @default "https://api.princetechn.com/api/ai/geminiaipro"
      */
-    AI_API_URL: process.env.AI_API_URL || 'https://api.princetechn.com/api/ai/chat',
+    AI_API_URL: process.env.AI_API_URL || 'https://api.princetechn.com/api/ai/geminiaipro',
     
     /** 
      * @description AI API Key
@@ -112,6 +112,20 @@ module.exports = {
      * @default 10000
      */
     AI_TIMEOUT: process.env.AI_TIMEOUT || 10000,
+    
+    /** 
+     * @description Enable memory/conversation history for AI
+     * @type {string}
+     * @default "true"
+     */
+    AI_MEMORY: process.env.AI_MEMORY || 'true',
+    
+    /** 
+     * @description Enable view-once message opening
+     * @type {string}
+     * @default "true"
+     */
+    ANTI_VIEWONCE: process.env.ANTI_VIEWONCE || 'true',
 
     // ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
     //  👁️ STATUS AUTOMATION
@@ -295,14 +309,17 @@ module.exports = {
  * console.log(`Bot: ${config.BOT_NAME}`);
  * console.log(`Prefix: ${config.PREFIX}`);
  * console.log(`Owner: ${config.OWNER_NUMBER}`);
+ * console.log(`Work Type: ${config.WORK_TYPE}`);
  * 
  * // Check if AI mode is enabled
  * if (config.AI_MODE === 'true') {
  *     console.log('AI mode is active');
  * }
  * 
- * // Get random like emoji
- * const randomEmoji = config.AUTO_LIKE_EMOJI[Math.floor(Math.random() * config.AUTO_LIKE_EMOJI.length)];
+ * // Check if memory is enabled
+ * if (config.AI_MEMORY === 'true') {
+ *     console.log('Conversation memory is active');
+ * }
  */
 
 // ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[...]
@@ -312,7 +329,12 @@ module.exports = {
 /**
  * @module config
  * @description QUEEN MIA  MD Bot Configuration Module
- * @version 2.0.0
+ * @version 2.2.0
  * @queen Mia MD
  * @license MIT
+ * @features
+ * - AI Mode with Gemini AI Pro
+ * - Conversation Memory System
+ * - View-Once Message Opening
+ * - Private Mode (DM only)
  */
