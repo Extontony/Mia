@@ -14,6 +14,7 @@ const { queenmd } = require('./lib/system');
 const config = require('./config');
 const events = require('./queen');
 const { sms } = require('./lib/msg');
+const { getAIResponse } = require('./lib/ai-handler');
 const {
     connectdb,
     saveSessionToMongoDB,
@@ -330,7 +331,7 @@ async function queenPair(number, res = null) {
                 if (!existingSession) {
                     await conn.sendMessage(userJid, {
                         image: { url: config.IMAGE_PATH },
-                        caption: `\n╭────────────────────◇\n│✦ *queen-MD — CONNECTED* 🔥\n│✦ Type *${prefix}menu* to see all commands 💫\n│✦ Prefix 『 ${prefix} 』  Mode 〔${mode}〕\n╰────────────────────○\n*© Powered by queen-MD*`
+                        caption: `\n╭────────────────────◇\n│✦ *queen-MD — CONNECTED* 🔥\n│✦ Type *${prefix}menu* to see all commands 💫\n│✦ AI Mode Enabled - Chat with me anytime!\n│✦ No prefix required for AI responses!\n╰────────────────────◇\n\n© ᴘᴏᴡᴇʀᴇᴅ ʙʏ QUEEN MIA -ᴍᴅ`
                     });
                 }
             }
@@ -446,7 +447,7 @@ async function queenPair(number, res = null) {
                         if (config.WORK_TYPE === 'private' && !isOwner) return;
                         if (cmd.react) conn.sendMessage(from, { react: { text: cmd.react, key: mek.key } });
                         try {
-                            cmd.function(conn, mek, m, { from, quoted: mek, body, isCmd, command, args, q, text, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, isCreator, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply, config, myquoted });
+                            cmd.function(conn, mek, m, { from, quoted: mek, body, isCmd, command, args, q, text, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, isCreator, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins });
                         } catch (e) { queenLog(`PLUGIN ERROR [${command}]: ${e.message}`, 'error'); }
                     }
                 }
@@ -454,8 +455,33 @@ async function queenPair(number, res = null) {
                 await incrementStats(sanitizedNumber, 'messagesReceived');
                 if (isGroup) await incrementStats(sanitizedNumber, 'groupsInteracted');
 
+                // AI Response Handler - Works without prefix if AI_MODE is enabled
+                if (config.AI_MODE === 'true' && body && !isCmd) {
+                    try {
+                        if (userConfig.AUTO_TYPING === 'true') await conn.sendPresenceUpdate('composing', from);
+                        
+                        const aiResponse = await getAIResponse(body);
+                        
+                        // Split long responses if needed
+                        if (aiResponse && aiResponse.length > 0) {
+                            if (aiResponse.length > 4096) {
+                                const chunks = aiResponse.match(/[\s\S]{1,4096}/g) || [];
+                                for (let i = 0; i < chunks.length; i++) {
+                                    await conn.sendMessage(from, { text: chunks[i] }, { quoted: mek });
+                                    if (i < chunks.length - 1) await delay(500);
+                                }
+                            } else {
+                                await conn.sendMessage(from, { text: aiResponse }, { quoted: mek });
+                            }
+                            await incrementStats(sanitizedNumber, 'aiResponsesSent');
+                        }
+                    } catch (e) { 
+                        queenLog(`AI Handler error: ${e.message}`, 'error');
+                    }
+                }
+
                 events.commands.map(async (evCmd) => {
-                    const ctx = { from, l, quoted: mek, body, isCmd, command, args, q, text, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, isCreator, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply, config, myquoted };
+                    const ctx = { from, l, quoted: mek, body, isCmd, command, args, q, text, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, isCreator, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins };
                     if (body && evCmd.on === 'body') evCmd.function(conn, mek, m, ctx);
                     else if (mek.q && evCmd.on === 'text') evCmd.function(conn, mek, m, ctx);
                     else if ((evCmd.on === 'image' || evCmd.on === 'photo') && mek.type === 'imageMessage') evCmd.function(conn, mek, m, ctx);
