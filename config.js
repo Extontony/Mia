@@ -1,27 +1,27 @@
-// ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
-//  
-// ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
-//                    QUEEN MIA  MD - BOT CONFIGURATION
-// ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+// ═══════════════════════════════════════════════════════════════════════
+//
+//                    QUEEN MIA  MD - BOT CONFIGURATION (SANITIZED)
+//
+// ═══════════════════════════════════════════════════════════════════════
 
 const fs = require('fs');
 const dotenv = require('dotenv');
 
-// ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[...]
+// ────────────────────────────────────────────────────────────────────────
 //  🔄 ENVIRONMENT LOADER
-// ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[...]
+// ────────────────────────────────────────────────────────────────────────
 if (fs.existsSync('.env')) {
     dotenv.config({ path: '.env' });
 }
 
-// ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[...]
+// ────────────────────────────────────────────────────────────────────────
 //  📦 CONFIGURATION EXPORT
-// ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[...]
+// ────────────────────────────────────────────────────────────────────────
 module.exports = {
 
-    // ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+    // ═══════════════════════════════════════════════════════════════════
     //  🔐 SESSION & DATABASE
-    // ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+    // ═══════════════════════════════════════════════════════════════════
     
     /** 
      * @description Session ID for bot authentication and persistence
@@ -31,15 +31,15 @@ module.exports = {
     SESSION_ID: process.env.SESSION_ID || "MINI BOT",
     
     /** 
-     * @description MongoDB Atlas connection string
+     * @description MongoDB Atlas connection string (REQUIRED via env)
      * @type {string}
-     * @default "mongodb+srv://..."
+     * @default ""
      */
-    MONGODB_URI: process.env.MONGODB_URI || 'mongodb+srv://offarslan_db_user:arslanmd@cluster0.xrqkzwg.mongodb.net/?appName=Cluster0',
+    MONGODB_URI: process.env.MONGODB_URI || '',
 
-    // ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+    // ═══════════════════════════════════════════════════════════════════
     //  🤖 BOT IDENTITY
-    // ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+    // ═══════════════════════════════════════════════════════════════════
     
     /** 
      * @description Command prefix for bot interactions
@@ -49,41 +49,36 @@ module.exports = {
     PREFIX: process.env.PREFIX || '.',
     
     /** 
-     * @description Owner's WhatsApp number with country code
+     * @description Owner's WhatsApp number with country code (set via env)
      * @type {string}
-     * @default "+263777237953"
+     * @default ""
      */
-    OWNER_NUMBER: process.env.OWNER_NUMBER || '+263777237953',
+    OWNER_NUMBER: process.env.OWNER_NUMBER || '',
     
     /** 
      * @description Display name of the bot
      * @type {string}
      * @default "Queen Mia MD Mini"
      */
-    BOT_NAME: "QUEEN MIA  MD Mini",
+    BOT_NAME: process.env.BOT_NAME || "QUEEN MIA  MD Mini",
     
     /** 
      * @description Footer text for bot messages
      * @type {string}
      * @default "© ᴘᴏᴡᴇʀᴇᴅ ʙʏ QUEEN MIA -ᴍᴅ"
      */
-    BOT_FOOTER: '© ᴘᴏᴡᴇʀᴇᴅ ʙʏ QUEEN MIA ',
+    BOT_FOOTER: process.env.BOT_FOOTER || '© ᴘᴏᴡᴇʀᴇᴅ ʙʏ QUEEN MIA ',
     
     /** 
      * @description Bot work mode
      * @type {('public'|'private'|'group'|'inbox')}
      * @default "private"
-     * @example
-     * - public  : Responds to all messages
-     * - private : Only responds in DMs
-     * - group   : Only responds in groups
-     * - inbox   : Only responds in DMs
      */
     WORK_TYPE: process.env.WORK_TYPE || "private",
 
-    // ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+    // ═══════════════════════════════════════════════════════════════════
     //  🤖 AI CONFIGURATION
-    // ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+    // ═══════════════════════════════════════════════════════════════════
     
     /** 
      * @description Enable AI mode - Responds to all messages without prefix
@@ -93,18 +88,18 @@ module.exports = {
     AI_MODE: process.env.AI_MODE || 'true',
     
     /** 
-     * @description AI API URL - Gemini AI Pro
+     * @description AI API URL (recommended to set via environment)
      * @type {string}
-     * @default "https://api.princetechn.com/api/ai/geminiaipro"
+     * @default ""
      */
-    AI_API_URL: process.env.AI_API_URL || 'https://api.princetechn.com/api/ai/geminiaipro',
+    AI_API_URL: process.env.AI_API_URL || '',
     
     /** 
-     * @description AI API Key
+     * @description AI API Key (REQUIRED via env)
      * @type {string}
-     * @default "prince"
+     * @default ""
      */
-    AI_API_KEY: process.env.AI_API_KEY || 'prince',
+    AI_API_KEY: process.env.AI_API_KEY || '',
     
     /** 
      * @description AI Response timeout in milliseconds
@@ -127,9 +122,9 @@ module.exports = {
      */
     ANTI_VIEWONCE: process.env.ANTI_VIEWONCE || 'true',
 
-    // ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+    // ═══════════════════════════════════════════════════════════════════
     //  👁️ STATUS AUTOMATION
-    // ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+    // ═══════════════════════════════════════════════════════════════════
     
     /** 
      * @description Auto-view WhatsApp status updates
@@ -149,7 +144,7 @@ module.exports = {
      * @description Emoji pool for auto-like feature
      * @type {string[]}
      */
-    AUTO_LIKE_EMOJI: ['❤️', '🌹', '✨', '🥰', '🌹', '😍', '💞', '💕', '☺️', '🤗'],
+    AUTO_LIKE_EMOJI: process.env.AUTO_LIKE_EMOJI ? process.env.AUTO_LIKE_EMOJI.split(',') : ['❤️', '🌹', '✨', '🥰', '😍', '💞', '💕', '☺️', '🤗'],
     
     /** 
      * @description Auto-reply to status updates
@@ -165,9 +160,9 @@ module.exports = {
      */
     AUTO_STATUS_MSG: process.env.AUTO_STATUS_MSG || '🤗',
 
-    // ══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+    // ═══════════════════════════════════════════════════════════════════
     //  💬 PRESENCE & CHAT SETTINGS
-    // ══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+    // ═══════════════════════════════════════════════════════════════════
     
     /** 
      * @description Mark messages as read (blue ticks)
@@ -190,9 +185,9 @@ module.exports = {
      */
     AUTO_RECORDING: process.env.AUTO_RECORDING || 'false',
 
-    // ══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+    // ═══════════════════════════════════════════════════════════════════
     //  👥 GROUP MANAGEMENT
-    // ══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+    // ═══════════════════════════════════════════════════════════════════
     
     /** 
      * @description Send welcome message when new member joins
@@ -237,14 +232,14 @@ module.exports = {
     GOODBYE_IMAGE: process.env.GOODBYE_IMAGE || null,
     
     /** 
-     * @description WhatsApp group invite link
-     * @type {string}
+     * @description WhatsApp group invite link (set via env if needed)
+     * @type {string|null}
      */
-    GROUP_INVITE_LINK: process.env.GROUP_INVITE_LINK || 'https://chat.whatsapp.com/Jpf5TU6nrwlFcQnW86bR7f?s=cl&p=a&mlu=',
+    GROUP_INVITE_LINK: process.env.GROUP_INVITE_LINK || null,
 
-    // ══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+    // ═══════════════════════════════════════════════════════════════════
     //  🛡️ SECURITY & ANTI-CALL
-    // ══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+    // ═══════════════════════════════════════════════════════════════════
     
     /** 
      * @description Reject incoming calls automatically
@@ -260,45 +255,45 @@ module.exports = {
      */
     REJECT_MSG: process.env.REJECT_MSG || '*CALL LATER PLEASE ☺️🌹*',
 
-    // ══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+    // ═══════════════════════════════════════════════════════════════════
     //  🖼️ MEDIA & LINKS
-    // ══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+    // ═══════════════════════════════════════════════════════════════════
     
     /** 
-     * @description Default bot profile image path/URL
-     * @type {string}
+     * @description Default bot profile image path/URL (set via env)
+     * @type {string|null}
      */
-         IMAGE_PATH: 'https://imgur.com/a/OVo6eqg',
+    IMAGE_PATH: process.env.IMAGE_PATH || null,
     
     /** 
-     * @description WhatsApp channel link for updates
-     * @type {string}
+     * @description WhatsApp channel link for updates (set via env)
+     * @type {string|null}
      */
-    CHANNEL_LINK: 'https://whatsapp.com/channel/0029VarfjW04tRrmwf',
+    CHANNEL_LINK: process.env.CHANNEL_LINK || null,
 
-    // ══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+    // ═══════════════════════════════════════════════════════════════════
     //  📡 EXTERNAL API INTEGRATIONS
-    // ══════════════════════════════════════════════════════════════════════════════════════════════════════════════[...]
+    // ═══════════════════════════════════════════════════════════════════
     
     /** 
-     * @description Telegram bot token for notifications
+     * @description Telegram bot token for notifications (REQUIRED via env)
      * @type {string}
-     * @default "7214172448:..."
+     * @default ""
      */
-    TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN || '7214172448:AAHGqSgaw-zGVPZWvl8msDOVDhln-9kExas',
+    TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN || '',
     
     /** 
      * @description Telegram chat ID for sending notifications
      * @type {string}
-     * @default "+923237045919"
+     * @default ""
      */
-    TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID || '+263777237953'
+    TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID || ''
 
 };
 
-// ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[...]
+// ────────────────────────────────────────────────────────────────────────
 //  📖 USAGE EXAMPLES
-// ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[...]
+// ────────────────────────────────────────────────────────────────────────
 
 /**
  * @example
@@ -322,18 +317,18 @@ module.exports = {
  * }
  */
 
-// ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[...]
+// ────────────────────────────────────────────────────────────────────────
 //  🏷️ EXPORT METADATA
-// ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────[...]
+// ────────────────────────────────────────────────────────────────────────
 
 /**
  * @module config
- * @description QUEEN MIA  MD Bot Configuration Module
+ * @description QUEEN MIA  MD Bot Configuration Module (sanitized defaults)
  * @version 2.2.0
  * @queen Mia MD
  * @license MIT
  * @features
- * - AI Mode with Gemini AI Pro
+ * - AI Mode with configurable API
  * - Conversation Memory System
  * - View-Once Message Opening
  * - Private Mode (DM only)
